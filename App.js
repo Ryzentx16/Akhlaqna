@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Button, StyleSheet, View} from 'react-native';
+import {Button, ScrollView, StyleSheet, View} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import Homepage from "./components/homepage/homepage.js";
@@ -14,6 +14,11 @@ import NotificationsPage from "./components/Pages/notificationsPage";
 import ChatsPage from "./components/Pages/chatsPage";
 import AddPostPage from "./components/Pages/addpostPage";
 import Chat from "./components/Pages/chat";
+import FoundPage from "./components/Pages/foundPage";
+import LostPage from "./components/Pages/lostPage";
+import PersonProfile from "./components/Pages/PersonProfile";
+import AccountPage from "./components/Pages/AccountPage";
+import SettingPage from "./components/Pages/SettingPage";
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +55,21 @@ export default class App extends Component {
                     {/* Chat Page */}
                     <Stack.Screen name="Chat" component={Chat}/>
 
+                    {/* Found Page */}
+                    <Stack.Screen name="FoundPage" component={FoundPage}/>
+
+                    {/* Lost Page */}
+                    <Stack.Screen name="LostPage" component={LostPage}/>
+
+                    {/* Person Profile */}
+                    <Stack.Screen name="PersonProfile" component={PersonProfile}/>
+
+                    {/* Account Page */}
+                    <Stack.Screen name="AccountPage" component={AccountPage}/>
+
+                    {/* Setting Page */}
+                    <Stack.Screen name="SettingPage" component={SettingPage}/>
+
                 </Stack.Navigator>
             </NavigationContainer>
         );
@@ -70,7 +90,12 @@ function HomeScreen({navigation, route}) {
             'NotificationsPage',
             'ChatsPage',
             'AddPostPage',
-            'Chat'
+            'Chat',
+            'FoundPage',
+            'LostPage',
+            'PersonProfile',
+            'AccountPage',
+            'SettingPage'
         ];
 
     let btns = [];
@@ -83,7 +108,9 @@ function HomeScreen({navigation, route}) {
 
     return (
         <View style={styles.container}>
-            {btns}
+            <ScrollView>
+                {btns}
+            </ScrollView>
         </View>
     );
 }

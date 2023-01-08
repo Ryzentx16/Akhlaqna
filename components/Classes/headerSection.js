@@ -3,7 +3,7 @@ import {Image, StyleSheet, TextInput, TouchableOpacity, View} from 'react-native
 import PostsPage from "../Pages/postsPage";
 
 function HeaderSection(props) {
-    const {navigation} = props;
+    const {navigation, isHome=true, isMenu} = props;
     const isSearchBar = props.isSearchBar;
     let curveLineValue = (isSearchBar) ? -350 : -380;
     // console.warn(isSearchBar);
@@ -26,11 +26,23 @@ function HeaderSection(props) {
                        style={styles.imageLogo}
                 />
             </View>
-            <TouchableOpacity style={styles.homeIconHolder} onPress={() => navigation.navigate(PostsPage)}>
-                <Image source={require("../../assets/Icon_home.png")}
-                       style={styles.homeIcon}
-                />
-            </TouchableOpacity>
+            {
+                (isHome) ?
+                    <TouchableOpacity style={styles.homeIconHolder} onPress={() => navigation.navigate(PostsPage)}>
+                        <Image source={require("../../assets/Icon_home.png")}
+                               style={styles.homeIcon}
+                        />
+                    </TouchableOpacity> : null
+
+            }
+            {
+                (isMenu) ?
+                    <View style={styles.menuIconHolder}>
+                        <Image source={require("../../assets/Icon_menu.png")}
+                               style={styles.menuIcon}
+                        />
+                    </View> : null
+            }
             {
                 (isSearchBar) ? <View style={[styles.searchBar, props.searchBarStyle]}>
                     <Image style={styles.searchBarIcon}
@@ -49,8 +61,10 @@ function HeaderSection(props) {
 
 const styles = StyleSheet.create({
     headerSection: {
-        flex: 0,
+        // flex: 0,
         borderColor: 'red',
+
+        marginBottom: 50,
     },
     iconHolder: {
         marginTop: 15,
@@ -128,12 +142,12 @@ const styles = StyleSheet.create({
     menuIconHolder: {
         position: 'absolute',
 
-        marginTop: 50,
-        marginLeft: 360,
+        marginTop: 25,
+        marginLeft: 370,
     },
     menuIcon: {
-        height: 30,
-        width: 30,
+        height: 25,
+        width: 25,
 
     },
 

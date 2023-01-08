@@ -1,75 +1,18 @@
 import React from 'react';
-import {Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import {Dimensions, FlatList, StyleSheet, View} from 'react-native';
 import BottomSection from "../Classes/bottomSection";
 // import chats from "../data/chats";
 import notifications from "../data/notifications";
 import HeaderSection from "../Classes/headerSection";
+import NotificationCard from "../Classes/notificationCard";
 
 const NotificationsPage = ({navigation}) => {
     let _notifications = [];
 
-    for (let i = 0; i < notifications.length; i++) {
-        let notification = notifications[i];
-        _notifications.push(
-            <View style={styles.notifications}>
-                <View style={{flex: 1.5, backgroundColor: 'white'}}>
-                    <View>
-                        <Image style={{
-                            height: 50,
-                            width: 50,
-                            resizeMode: 'cover',
-                            alignSelf: 'center',
-                            overflow: 'visible',
-                            // backgroundColor: 'black'
-                        }} source={notification.user.profileImage}/>
-                    </View>
-                    {
-                        ((notification.notificationIcon === null) ? (
-                            <View style={{backgroundColor: "black", margin: 2}}>
-                                <Image style={{
-                                    height: 50,
-                                    width: 50,
-                                    resizeMode: 'contain',
-                                    alignSelf: 'center',
-                                    overflow: 'visible',
-                                }} source={notification.notificationIcon}/>
-                            </View>) : <View>
-                            <Image style={{
-                                height: 50,
-                                width: 50,
-                                resizeMode: 'contain',
-                                alignSelf: 'center',
-                                overflow: 'visible',
-
-                            }} source={notification.notificationIcon}/>
-                        </View>)
-                    }
-                </View>
-                <View style={{flex: 6, backgroundColor: 'white', paddingTop: 10, marginLeft: 5}}>
-                    <View style={{flex: 1,}}>
-                        <Text style={{color: '#660032'}}>
-                            {notification.user.name}
-                        </Text>
-                    </View>
-                    <View style={{flex: 2,}}>
-                        <Text style={{color: '#660032'}}>
-                            {notification.user.name} has reacted one of your posts
-                        </Text>
-                    </View>
-                </View>
-                <View style={{flex: 1, backgroundColor: 'white'}}>
-                    <View>
-                        <Image style={{
-                            height: 35,
-                            resizeMode: 'contain',
-                            alignSelf: 'center',
-                            overflow: 'visible',
-                            marginTop: '75%',
-                        }} source={require('../../assets/threeDots.png')}/>
-                    </View>
-                </View>
-            </View>
-        );
+    for (let i = 0; i < notifications.length * 5; i++) {
+        _notifications.push(notifications[i % notifications.length]);
+        // _notifications.push(notifications[i]);
+        // _notifications.push(notifications[i]);
     }
 
     return (
@@ -108,15 +51,17 @@ const NotificationsPage = ({navigation}) => {
             <HeaderSection isSearchBar={true} navigation={navigation}/>
 
             <View style={styles.notificationSection}>
-                <ScrollView>
-                    {_notifications}
-                    {_notifications}
-                    {_notifications}
-                    {_notifications}
-                </ScrollView>
+                <FlatList data={_notifications}
+                          keyExtractor={(item, index) => index}
+                          renderItem={(item, index) => {
+                              // console.warn(item);
+                              return <NotificationCard notification={item.item}
+                                                       type={item.item.type}/>;
+                          }}
+                />
             </View>
 
-            <BottomSection navigation={navigation} currentFunctionValue={NotificationsPage} />
+            <BottomSection navigation={navigation} currentFunctionValue={NotificationsPage}/>
         </View>
     );
 }
@@ -127,6 +72,7 @@ function getHeight(num) {
     num = parseInt(num);
     return (num / 100) * Dimensions.get('window').height;
 }
+
 function getWidth(num) {
     // counterW += 1;
     // console.warn(Dimensions.get('window').width)
