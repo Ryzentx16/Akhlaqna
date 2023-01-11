@@ -1,9 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Dimensions, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
-import BottomSection from '../Classes/bottomSection'
-import chats from "../data/chats";
-import users from "../data/users";
-import HeaderSection from "../Classes/headerSection";
+import BottomSection from '../../Classes/bottomSection'
+import chats from "../../data/chats";
+import users from "../../data/users";
+import HeaderSection from "../../Classes/headerSection";
 
 const ChatsPage = ({navigation}) => {
     let _chats = [];
@@ -28,7 +28,7 @@ const ChatsPage = ({navigation}) => {
                             resizeMode: 'contain',
                             alignSelf: 'flex-end',
                             overflow: 'visible',
-                        }} source={require('../../assets/threeDots.png')}/>
+                        }} source={require('../../../assets/threeDots.png')}/>
                     </View>
                     <View style={styles.lastSeen}>
                         <Text style={{alignSelf: 'flex-end', color: '#660032'}}>Last Seen {chat.lastSeen} ago</Text>

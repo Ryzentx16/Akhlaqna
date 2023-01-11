@@ -13,7 +13,7 @@ public class MainActivity extends ReactActivity {
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     // Set the theme to AppTheme BEFORE onCreate to support 
-    // coloring the background, status bar, and navigation bar.
+    // coloring the commentContainer, status bar, and navigation bar.
     // This is required for expo-splash-screen.
     setTheme(R.style.AppTheme);
     super.onCreate(null);
@@ -42,7 +42,7 @@ public class MainActivity extends ReactActivity {
 
   /**
    * Align the back button behavior with Android S
-   * where moving root activities to background instead of finishing activities.
+   * where moving root activities to commentContainer instead of finishing activities.
    * @see <a href="https://developer.android.com/reference/android/app/Activity#onBackPressed()">onBackPressed</a>
    */
   @Override

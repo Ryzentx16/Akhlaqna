@@ -2,7 +2,7 @@ import React from 'react';
 import {Image, StyleSheet, TouchableOpacity, View} from 'react-native';
 import SearchPage from "../Pages/searchPage";
 import NotificationsPage from "../Pages/notificationsPage";
-import ChatsPage from "../Pages/chatsPage";
+import ChatsPage from "../Pages/Chat/chatsPage";
 import AddPostPage from "../Pages/addpostPage";
 
 

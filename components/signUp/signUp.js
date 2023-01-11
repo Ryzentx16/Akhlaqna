@@ -1,137 +1,101 @@
-import React, {Component} from 'react';
-import {Dimensions, Image, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import {Touchable} from "react-native-web";
+import React from 'react';
+import {Image, StyleSheet, Text, TextInput, TouchableOpacity, View} from 'react-native';
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
-export default class SignUp extends Component {
+let firstName = "";
+let lastName = "";
+let phoneNumber = "";
+let birthday = "";
+let newPassword = "";
+let confirmPassword = "";
 
-    constructor(props) {
-        super(props);
-        this.state = {};
-    }
-
-
-    handlePress(target, owner) {
-        if (this.props.onPress) {
-            let name;
-            let id;
-            let index = -1;
-            if (target.search("::") > -1) {
-                const varCount = target.split("::").length;
-                if (varCount === 2) {
-                    name = target.split("::")[0];
-                    id = target.split("::")[1];
-                } else if (varCount === 3) {
-                    name = target.split("::")[0];
-                    index = parseInt(target.split("::")[1]);
-                    id = target.split("::")[2];
-                }
-            } else {
-                name = target;
-            }
-            this.props.onPress({type: 'button', name: name, index: index, id: id, owner: owner});
-        }
-    }
-
-    handleChangeTextinput(name, value) {
-        let id;
-        let index = -1;
-        if (name.search('::') > -1) {
-            const varCount = name.split("::").length;
-            if (varCount === 2) {
-                name = name.split("::")[0];
-                id = name.split("::")[1];
-            } else if (varCount === 3) {
-                name = name.split("::")[0];
-                index = name.split("::")[1];
-                id = name.split("::")[2];
-            }
-        } else {
-            name = name;
-        }
-        let state = this.state;
-        state[name.split('::').join('')] = value;
-        this.setState(state, () => {
-            if (this.props.onChange) {
-                this.props.onChange({type: 'textinput', name: name, value: value, index: index, id: id});
-            }
-        });
-    }
-
-    render(navigation) {
-
-        return (
-            <View style={styles.background}>
-                <View style={styles.backSection}>
-                    <TouchableOpacity style={styles.iconHolder} onPress={() => this.props.navigation.goBack()}>
-                        <Image source={require("../../assets/Icon_arrow_back.png")} style={styles.iconBack}/>
-                    </TouchableOpacity>
-                </View>
-                <View style={styles.logoSection}>
-                    <View style={styles.logoHolder}>
-                        <Image source={require("../../assets/Logo.png")} style={styles.imageLogo}/>
-                    </View>
-                </View>
-                <View style={styles.questionSection}>
-                    <Text style={styles.qText}>Choose how you want to sign up</Text>
-                    <View style={styles.firstRowButtons}>
-                        <TouchableOpacity style={styles.qidButton} onPress={() => this.props.navigation.navigate('SignUpQID')}>
-                            <Text style={{
-                                alignSelf: 'center',
-                                justifyContent: 'center',
-                                color: '#660032',
-                                fontSize: 23
-                            }}>QID</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.phoneButton} onPress={() => this.props.navigation.navigate('SignUpPhone')}>
-                            <Text style={{
-                                alignSelf: 'center',
-                                justifyContent: 'center',
-                                color: '#660032',
-                                fontSize: 20
-                            }}>Phone</Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={styles.secRowButton}>
-                        <TouchableOpacity style={styles.emailButton} onPress={() => this.props.navigation.navigate('SignUpEmail')}>
-                            <Text style={{
-                                flex: 1,
-                                alignSelf: 'center',
-                                justifyContent: 'center',
-                                color: '#660032',
-                                fontSize: 25,
-                            }}>Email</Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-                <View style={styles.submitSection}>
-                    {/*<TouchableOpacity style={styles.nextButton}>
-                        <Text style={{
-                            flex: 1,
-                            alignSelf: 'center',
-                            justifyContent: 'center',
-                            color: '#660032',
-                            fontSize: 32,
-                        }}>Next</Text>
-                    </TouchableOpacity>*/}
+export default function SignUp({navigation}) {
+    return (
+        <View style={styles.background}>
+            <View style={styles.logoSection}>
+                <View style={styles.logo}>
+                    <Image source={require("../../assets/Logo.png")}
+                           style={styles.imageLogo}/>
+                    {/*<AmanatiLogo style={styles.imageLogo}/>*/}
                 </View>
             </View>
-        );
-    }
-}
 
+            <View style={styles.titleContainer}>
+                <Text style={styles.title}>Sign Up</Text>
+            </View>
 
-function getHeight(num) {
-    // counterH += 1;
-    // console.warn("From Height: " + counterH)
-    num = parseInt(num);
-    return (num / 100) * Dimensions.get('window').height;
-}
+            <View style={styles.inputsContainer}>
+                <View style={styles.usernameContainer}>
+                    <View style={styles.firstnameContainer}>
+                        <View style={styles.firstname}>
+                            <TextInput placeholder={"First Name"}
+                                       placeholderTextColor={"rgba(102,0,50,0.75)"}
+                                       onChangeText={(text) => {
+                                           firstName = text
+                                       }}/>
+                        </View>
+                    </View>
+                    <View style={styles.lastnameContainer}>
+                        <View style={styles.lastname}>
+                            <TextInput placeholder={"Last Name"}
+                                       placeholderTextColor={"rgba(102,0,50,0.75)"}
+                                       onChangeText={(text) => {
+                                           lastName = text
+                                       }}/>
+                        </View>
+                    </View>
+                </View>
 
-function getWidth(num) {
-    // counterW += 1;
-    // console.warn(Dimensions.get('window').width)
-    num = parseInt(num);
-    return (num / 100) * Dimensions.get('window').width;
+                <View style={styles.phonenumberContainer}>
+                    <View style={styles.phonenumber}>
+                        <TextInput placeholder={"+974" + " | Phone Number"}
+                                   placeholderTextColor={"rgba(102,0,50,0.75)"}
+                                   onChangeText={(text) => {
+                                       phoneNumber = text
+                                   }}/>
+                    </View>
+                </View>
+
+                <View style={styles.birthdayContainer}>
+                    <View style={styles.birthday}>
+                        <View style={{flex: 8}}>
+                            <TextInput placeholder={"Birthday"}
+                                       placeholderTextColor={"rgba(102,0,50,0.75)"}
+                                       onChangeText={(text) => {
+                                           birthday = text
+                                       }}/>
+                        </View>
+                        <View style={styles.birthdayIcon}>
+                            <FontAwesome5 name={'calendar-alt'}
+                                          size={30}
+                                          color={"#660032"}/>
+                        </View>
+                    </View>
+                </View>
+
+                <View style={styles.passwordContainer}>
+                    <View style={styles.newPasswordContainer}>
+                        <TextInput placeholder={"New Password"}
+                                   placeholderTextColor={"rgba(102,0,50,0.75)"}
+                                   onChangeText={(text) => {newPassword = text}}
+                        />
+                    </View>
+                    <View style={styles.confirmPasswordContainer}>
+                        <TextInput placeholder={"Confirm Password"}
+                                   placeholderTextColor={"rgba(102,0,50,0.75)"}
+                                   onChangeText={(text) => {confirmPassword = text}}
+                        />
+                    </View>
+                </View>
+            </View>
+
+            <View style={styles.loginContainer}>
+                <TouchableOpacity style={styles.login}>
+                    <Text style={{fontSize: 26, color: '#660032'}}>Log in</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    );
 }
 
 
@@ -139,130 +103,192 @@ const styles = StyleSheet.create({
     background: {
         flex: 1,
         backgroundColor: 'white',
-        paddingBottom: 190,
-    },
-
-    backSection: {
-        flex: 1,
-        // backgroundColor: 'lightblue'
-    },
-
-    iconHolder: {
-        flex: 1,
-        marginTop: 15,
-        marginLeft: 15,
-    },
-    iconBack: {
-        height: 32,
-        width: 32,
     },
 
     logoSection: {
-        flex: 3,
-        // backgroundColor: 'yellow'
-        marginBottom: -20,
-    },
-    logoHolder: {
-        flex: 1,
-        borderWidth: 3,
-        borderColor: '#660032',
-        borderRadius: 99,
+        flex: 2,
+        alignItems: 'center',
+        justifyContent: 'center',
 
-        marginHorizontal: 140,
-        marginBottom: 48,
+        // backgroundColor: 'red',
+    },
+    logo: {
+        height: 125,
+        width: 125,
+        borderColor: '#660032',
+        borderWidth: 2,
+        borderRadius: 150 / 2,
+
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     imageLogo: {
-        height: 102,
-        width: 67,
-        alignSelf: 'center',
+        // alignSelf: 'center',
+        height: 87,
+        width: 57,
 
-        marginTop: 9,
-        marginLeft: 7,
-        // justifyContent: 'center',
+        // marginTop: 12,
+        marginLeft: 4,
     },
 
-    questionSection: {
-        flex: 5,
+    titleContainer: {
+        flex: 1,
         // backgroundColor: 'green',
 
-        // borderWidth: 4,
-        borderColor: 'black',
-
-        // marginTop: -20,
-        marginHorizontal: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
-    qText: {
-        alignSelf: 'center',
-        fontSize: 17,
-        fontWeight: 'bold',
-        color: '#660032',
-        marginTop: 40,
-    },
-    firstRowButtons: {
-        flex: 1,
-        flexDirection: 'row',
-        // backgroundColor: 'black',
-        marginVertical: 35,
-        marginHorizontal: 20,
-    },
-    qidButton: {
-        flex: 1,
-        // backgroundColor: 'red',
-
-        borderWidth: 2,
-        borderColor: '#660032',
-        borderRadius: 37,
-
-        marginRight: 10,
-
-        paddingTop: 10,
-        // paddingBottom: ,
-    },
-    phoneButton: {
-        flex: 1,
-        // backgroundColor: 'pink',
-
-        borderWidth: 2,
-        borderColor: '#660032',
-        borderRadius: 37,
-
-        marginLeft: 10,
-
-        paddingTop: 12,
-    },
-    secRowButton: {
-        flex: 1,
-        // backgroundColor: 'purple',
-
-        marginBottom: 40,
-        marginHorizontal: 75,
-    },
-    emailButton: {
-        flex: 1,
-        // backgroundColor: 'yellow',
-        borderWidth: 2,
-        borderColor: '#660032',
-        borderRadius: 37,
-
-        paddingTop: 7,
+    title: {
+        fontSize: 26,
+        color: '#660032'
     },
 
-    submitSection: {
-        flex: 1,
+    inputsContainer: {
+        flex: 5,
         // backgroundColor: 'blue',
 
-        marginTop: 20,
     },
-    nextButton: {
+    usernameContainer: {
         flex: 1,
-        // backgroundColor: 'red',
+        flexDirection: 'row',
+        // backgroundColor: '#578978',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    firstnameContainer: {
+        flex: 1,
+        // backgroundColor: "red",
+
+        paddingHorizontal: 20,
+    },
+    firstname: {
+        flex: 1,
+        maxHeight: 50,
 
         borderWidth: 2,
-        borderColor: '#660032',
-        borderRadius: 37,
+        borderColor: "#660032",
+        borderRadius: 50,
 
-        marginHorizontal: 85,
+        paddingHorizontal: 16,
+        padding: 8,
+    },
+    lastnameContainer: {
+        flex: 1,
+        maxHeight: 50,
 
-        paddingTop: 3,
+        // backgroundColor: "blue",
+        paddingHorizontal: 20,
+
+    },
+    lastname: {
+        flex: 1,
+
+        borderWidth: 2,
+        borderColor: "#660032",
+        borderRadius: 50,
+
+        paddingHorizontal: 16,
+        padding: 8,
+    },
+
+    phonenumberContainer: {
+        flex: 1,
+        // backgroundColor: '#005152',
+        // alignItems: 'center',
+        justifyContent: 'center',
+
+        paddingHorizontal: 20,
+    },
+    phonenumber: {
+        flex: 1,
+        maxHeight: 50,
+
+        borderWidth: 2,
+        borderColor: "#660032",
+        borderRadius: 50,
+
+        paddingHorizontal: 16,
+        padding: 8,
+    },
+
+    birthdayContainer: {
+        flex: 1,
+        flexDirection: 'row',
+        // backgroundColor: '#987412',
+        alignItems: 'center',
+        justifyContent: 'center',
+
+        paddingHorizontal: 20,
+    },
+    birthday: {
+        flex: 1,
+        flexDirection: 'row',
+        maxHeight: 50,
+
+        borderWidth: 2,
+        borderColor: "#660032",
+        borderRadius: 50,
+
+        paddingHorizontal: 16,
+        padding: 8,
+    },
+    birthdayIcon: {
+        flex: 1,
+        // position: 'absolute',
+        // backgroundColor: 'red',
+
+        alignItems: 'flex-end',
+    },
+
+    btnsContainer: {
+        flex: 3,
+        backgroundColor: 'grey',
+    },
+    createNewPasswordContainer: {
+        flex: 1,
+        backgroundColor: 'red',
+    },
+    createNewPassword: {},
+    loginContainer: {
+        flex: 1,
+        // backgroundColor: 'blue',
+    },
+    login: {
+        flex: 1,
+        // justifyContent: 'center',
+        alignItems: 'center',
+    },
+
+    passwordContainer: {
+        flex: 2,
+        // backgroundColor: 'green',
+        // justifyContent: 'center',
+
+        paddingHorizontal: 20,
+        // paddingBottom: 15,
+    },
+    newPasswordContainer: {
+        flex: 1,
+        maxHeight: 50,
+
+        borderWidth: 2,
+        borderColor: "#660032",
+        borderRadius: 50,
+
+        paddingHorizontal: 16,
+        // paddingBottom: 10,
+        padding: 8,
+        marginBottom: 18,
+    },
+    confirmPasswordContainer: {
+        flex: 1,
+        maxHeight: 50,
+
+        borderWidth: 2,
+        borderColor: "#660032",
+        borderRadius: 50,
+
+        paddingHorizontal: 16,
+        padding: 8,
     },
 });
